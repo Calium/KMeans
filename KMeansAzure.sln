@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KMeansAzure", "KMeansAzure\KMeansAzure.csproj", "{7E068833-7D03-463F-8D69-8DC1E9F3DCA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KMeansAlgorithm", "KMeansAlgorithm\KMeansAlgorithm.csproj", "{B4C659F8-431D-4A7E-8AF3-EB094F4CE296}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E068833-7D03-463F-8D69-8DC1E9F3DCA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E068833-7D03-463F-8D69-8DC1E9F3DCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E068833-7D03-463F-8D69-8DC1E9F3DCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E068833-7D03-463F-8D69-8DC1E9F3DCA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C659F8-431D-4A7E-8AF3-EB094F4CE296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C659F8-431D-4A7E-8AF3-EB094F4CE296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C659F8-431D-4A7E-8AF3-EB094F4CE296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C659F8-431D-4A7E-8AF3-EB094F4CE296}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0ADA4664-7696-4924-8E52-EC78B7555B67}
+	EndGlobalSection
+EndGlobal
