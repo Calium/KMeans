@@ -19,25 +19,33 @@ namespace KMeansAlgorithm
             log.Info("K Means function triggered. ");
 
             string requestBody = new StreamReader(req.Body).ReadToEnd();    // Read body of the request
-            dynamic data = JsonConvert.DeserializeObject(requestBody);      // Parse the data
-            string instances = data?.instances;                         // Read data into strings as Nullables
-            string clusters = data?.clusters;
-            if (instances == null || clusters == null)                  // Could not read the data which means the algorithm cannot operate
+            Data data = JsonUtils.ParseDataFromJson<Data>(requestBody);     // Parse the data from JSon to Data object
+            if (data.Instances == null || data.Clusters <= 1)                  // Could not read the data/Invalid data which means the algorithm cannot operate
             {
                 return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
             }
-            double[][] dataInstances = JsonUtils.ParseDataFromJson<double[][]>(instances); // Parsing data input to int array of arrays to work with the data vectors
-            int amountOfClusters = JsonUtils.ParseDataFromJson<int>(clusters); // Parsing amount of clusters to use
-            log.Info("Amount of clusters is: " + amountOfClusters);
+            log.Info("Amount of clusters is: " + data.Clusters);
 
-            int[] resultsArray = KMeansClustering.ExecuteAlgorithm(dataInstances, amountOfClusters);
-            string resultClustering = JsonUtils.ParseDataToJson(resultsArray); // Parse results array back to string
-            log.Info("Result is: " + resultClustering);
+            Result result = new Result();
+            result.Clustering = KMeansClustering.ExecuteAlgorithm(data.Instances, data.Clusters);   // Execute the algorithm and save the result inside a Result object
+            string resultJson = JsonUtils.ParseDataToJson(result); // Serialize results array back to Json string
+            log.Info("Result is: " + resultJson);
             HttpResponseMessage algorithmOutput = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            algorithmOutput.Content = new StringContent(resultClustering, Encoding.UTF8, "application/json"); // Prepare sending result array as HTTP Response
+            algorithmOutput.Content = new StringContent(resultJson, Encoding.UTF8, "application/json"); // Prepare sending result array as HTTP Response
 
             return algorithmOutput;
         }
+    }
+
+    public class Data
+    {
+        public double[][] Instances { get; set; } // Double Array of arrays member to hold data in it's numeric form. Every 1-dimensional array here represents a vector of data. Better use Array of arrays instead of 2d array ([,]) in this case
+        public int Clusters { get; set; }         // Amount of clusters to divide the instances to - K Hyper parameter
+    }
+
+    public class Result
+    {
+        public int[] Clustering { get; set; }   // Int array to hold clustering results (Index - instance, Value - cluster of that instance)
     }
 
     public static class KMeansClustering

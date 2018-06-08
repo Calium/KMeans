@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace KMeansAzure
 {
     class Program
     {
-        public static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("------ *** K-Means Algorithm implementation as Azure function by Niv Rosnovsky - 7.6.18 *** ------");
 
@@ -38,12 +39,18 @@ namespace KMeansAzure
             Console.WriteLine("Data loaded successfuly.");
 
             Console.WriteLine(string.Format("Initiating & Running K-Means algorithm on Azure on given dataset with K: {0}.", clustersAmount));
-            kMeansOperator.Run();                           // Run the actual K-Means algorithm located inside an Azure function on the cloud
+            bool algorithmSucceed = await kMeansOperator.RunAlgorithm();                           // Run the actual K-Means algorithm located inside an Azure function on the cloud
+            if (!algorithmSucceed)
+            {
+                WriteAndWait("Algorithm Failed - Clustering array returned as null.");
+                Environment.Exit(1);
+            }
+
             Console.WriteLine("Finished clustering.");
             Console.WriteLine("Result as an array - Index means instance number, Value means cluster that an instance got.");
             ShowArray(kMeansOperator.Clustering);
             Console.WriteLine(string.Format("{0}Instances divided by clusters:{0}", Environment.NewLine));
-            ShowClusteredData(kMeansOperator.Data, kMeansOperator.Clustering, kMeansOperator.K);
+            ShowClusteredData(kMeansOperator.Instances, kMeansOperator.Clustering, kMeansOperator.K);
             WriteAndWait("Please press any key to terminate the program...");     // Just to stop the console from closing.
         }
 
